@@ -67,32 +67,24 @@
         }
 
         @keyframes floatLeft {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0) translateX(0) rotate(0deg);
             }
-
             33% {
                 transform: translateY(-15px) translateX(10px) rotate(5deg);
             }
-
             66% {
                 transform: translateY(-8px) translateX(-5px) rotate(-3deg);
             }
         }
 
         @keyframes floatRight {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0) translateX(0) rotate(0deg);
             }
-
             33% {
                 transform: translateY(-15px) translateX(-10px) rotate(-5deg);
             }
-
             66% {
                 transform: translateY(-8px) translateX(5px) rotate(3deg);
             }
@@ -137,13 +129,10 @@
         }
 
         @keyframes sparkleShine {
-
-            0%,
-            100% {
+            0%, 100% {
                 opacity: 0;
                 transform: scale(0);
             }
-
             50% {
                 opacity: 0.6;
                 transform: scale(1);
@@ -183,12 +172,9 @@
         }
 
         @keyframes gentleBounce {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0);
             }
-
             50% {
                 transform: translateY(-12px);
             }
@@ -254,7 +240,6 @@
                 opacity: 0;
                 transform: translateY(-30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -266,7 +251,6 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -296,12 +280,9 @@
         }
 
         @keyframes gentleFloat {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px);
             }
-
             50% {
                 transform: translateY(-10px);
             }
@@ -410,13 +391,10 @@
         }
 
         @keyframes gentleFlash {
-
-            0%,
-            100% {
+            0%, 100% {
                 opacity: 0.85;
                 transform: scale(1);
             }
-
             50% {
                 opacity: 1;
                 transform: scale(1.05);
@@ -455,7 +433,6 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -628,12 +605,9 @@
         }
 
         @keyframes gentlePulse {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: scale(1);
             }
-
             50% {
                 transform: scale(1.08);
             }
@@ -874,24 +848,24 @@
         // Crear pétalos y flores animados
         const petalEmojis = ['🌸', '🌺', '🌼', '🌷', '🏵️', '💐', '🌹', '🪷'];
         const sections = document.querySelectorAll('.section');
-
+        
         // Crear pétalos para cada sección (excepto hero y confirmation)
         sections.forEach((section, index) => {
             if (index === 0 || index === sections.length - 1) return;
-
+            
             // Crear 4 pétalos por sección (2 izquierda, 2 derecha)
             for (let i = 0; i < 4; i++) {
                 const petal = document.createElement('div');
                 petal.className = `petal ${i % 2 === 0 ? 'from-left' : 'from-right'}`;
                 petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-
+                
                 // Posición vertical aleatoria dentro de la sección
                 const topPosition = (index * 100) + (Math.random() * 60 + 20);
                 petal.style.top = `${topPosition}vh`;
-
+                
                 // Retraso aleatorio en la animación
                 petal.style.transitionDelay = `${i * 0.2}s`;
-
+                
                 document.body.appendChild(petal);
             }
         });
@@ -901,12 +875,12 @@
             entries.forEach((entry, index) => {
                 const sectionIndex = Array.from(sections).indexOf(entry.target);
                 const petals = document.querySelectorAll('.petal');
-
+                
                 petals.forEach(petal => {
                     const petalTop = parseFloat(petal.style.top);
                     const sectionTop = sectionIndex * 100;
                     const sectionBottom = (sectionIndex + 1) * 100;
-
+                    
                     if (petalTop >= sectionTop && petalTop <= sectionBottom) {
                         if (entry.isIntersecting) {
                             setTimeout(() => {
