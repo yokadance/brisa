@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis 15 - Brisa</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
@@ -123,36 +124,37 @@
             top: 0;
             left: 0;
             pointer-events: none;
+            z-index: 2;
         }
 
         .sparkle-dot {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffffff 0%, #c0c0c0 40%, rgba(192, 192, 192, 0) 70%);
             border-radius: 50%;
             opacity: 0;
-            animation: sparkleShine 4s ease-in-out infinite;
-            box-shadow: 0 0 3px white;
+            animation: sparkleAnim 3s infinite ease-in-out;
+            box-shadow: 0 0 6px rgba(192, 192, 192, 0.8);
         }
 
-        @keyframes sparkleShine {
+        @keyframes sparkleAnim {
 
             0%,
             100% {
                 opacity: 0;
-                transform: scale(0);
+                transform: scale(0.3) rotate(0deg);
             }
 
             50% {
-                opacity: 0.6;
-                transform: scale(1);
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
             }
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
 
         .hero h1 {
@@ -718,13 +720,11 @@
     <section class="section hero">
         <div class="sparkle" id="sparkle"></div>
         <div class="hero-content">
-            <div class="subtitle">Mis 15 Años</div>
             <h1>Brisa</h1>
-            <div class="hero-icon">🌸</div>
-            <div class="date">
-                <p>Viernes 14 de Noviembre 2025</p>
-                <p>21:00 hs</p>
+            <div class="hero-icon">
+                <img src="img/15.png"> </img>
             </div>
+
 
             <!-- Contador de días -->
             <div class="countdown">
@@ -748,10 +748,8 @@
     </section>
 
     <!-- Celebración -->
-    <section class="section celebration">
-        <div class="celebration-icon">🎉</div>
-
-        <div class="celebration-title">Celebración</div>
+    <section class="section celebration" id="celebration-section">
+        <div class="celebration-title">Celebremos juntos</div>
 
         <div class="event-info">
             <div class="event-item">
@@ -782,8 +780,8 @@
     <!-- Galería -->
     <section class="section gallery">
         <h2>Retratos de Mi Historia</h2>
-        <p>Un minuto, un segundo, un instante que queda en la eternidad</p>
-        <div class="camera-icon">📸</div>
+        <p>Pequeños momentos, grandes recuerdos... cada uno cuenta un pedacito del camino que me trajo hasta aquí.</p>
+
         <div class="photo-grid">
             <div class="photo-placeholder">🌟</div>
             <div class="photo-placeholder">💕</div>
@@ -795,11 +793,13 @@
     <!-- Fiesta -->
     <section class="section party">
         <h2>Fiesta</h2>
-        <p class="party-subtitle">Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.</p>
+        <p class="party-subtitle">Celebremos juntos en una noche de fiesta y alegría.</p>
 
         <div class="party-grid">
             <div class="party-card">
-                <div class="party-card-icon">👗</div>
+                <div class="party-card-icon">
+                    <img src="img/shoes.png" style="width: 50%; height: 50%;"> </img>
+                </div>
                 <h3>Dress Code</h3>
                 <div class="dress-code-box">
                     <p>Vestimenta Formal</p>
@@ -808,7 +808,9 @@
             </div>
 
             <div class="party-card">
-                <div class="party-card-icon">🎁</div>
+                <div class="party-card-icon">
+                    <img src="img/gifts.png" style="width: 50%; height: 50%;"> </img>
+                </div>
                 <h3>Regalos</h3>
                 <p>Si deseas regalarme algo más que tu hermosa presencia...</p>
                 <div class="gift-info">
@@ -836,7 +838,7 @@
                 Hacé click en el botón para confirmar tu asistencia por WhatsApp
             </p>
             <a href="https://wa.me/59899999999?text=Hola%20Brisa!%20Confirmo%20mi%20asistencia%20a%20tu%20fiesta%20de%2015%20años%20🎉"
-                class="whatsapp-btn" target="_blank">
+                class="whatsapp-btn" target="_blank" id="whatsapp-btn">
                 Confirmar por WhatsApp
             </a>
             <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 18px;">
@@ -871,59 +873,95 @@
         updateCountdown();
         setInterval(updateCountdown, 60000);
 
-        // Crear pétalos y flores animados
-        const petalEmojis = ['🌸', '🌺', '🌼', '🌷', '🏵️', '💐', '🌹', '🪷'];
-        const sections = document.querySelectorAll('.section');
+        /* --- Sparkles Plateados en el Hero --- */
+        const sparkleContainer = document.getElementById("sparkle");
+        for (let i = 0; i < 120; i++) {
+            const dot = document.createElement("div");
+            dot.className = "sparkle-dot";
+            dot.style.top = Math.random() * 100 + "%";
+            dot.style.left = Math.random() * 100 + "%";
+            dot.style.animationDelay = (Math.random() * 3) + "s";
+            dot.style.animationDuration = (2 + Math.random() * 2) + "s";
+            sparkleContainer.appendChild(dot);
+        }
 
-        // Crear pétalos para cada sección (excepto hero y confirmation)
-        sections.forEach((section, index) => {
-            if (index === 0 || index === sections.length - 1) return;
+        /* --- Confeti en "Celebremos juntos" --- */
+        const celebrationSection = document.getElementById('celebration-section');
+        let celebrationConfettiLaunched = false;
 
-            // Crear 4 pétalos por sección (2 izquierda, 2 derecha)
-            for (let i = 0; i < 4; i++) {
-                const petal = document.createElement('div');
-                petal.className = `petal ${i % 2 === 0 ? 'from-left' : 'from-right'}`;
-                petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+        const celebrationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !celebrationConfettiLaunched) {
+                    celebrationConfettiLaunched = true;
 
-                // Posición vertical aleatoria dentro de la sección
-                const topPosition = (index * 100) + (Math.random() * 60 + 20);
-                petal.style.top = `${topPosition}vh`;
+                    const count = 200;
+                    const defaults = {
+                        origin: { y: 0.7 },
+                        colors: ['#c6a3af', '#d4c4c8', '#c0c0c0', '#ffffff', '#ffc0cb']
+                    };
 
-                // Retraso aleatorio en la animación
-                petal.style.transitionDelay = `${i * 0.2}s`;
+                    function fire(particleRatio, opts) {
+                        confetti(Object.assign({}, defaults, opts, {
+                            particleCount: Math.floor(count * particleRatio)
+                        }));
+                    }
 
-                document.body.appendChild(petal);
-            }
+                    fire(0.25, { spread: 26, startVelocity: 55 });
+                    fire(0.2, { spread: 60 });
+                    fire(0.35, { spread: 100, decay: 0.91, scalar: 1.2 });
+                    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92 });
+                    fire(0.1, { spread: 120, startVelocity: 45 });
+
+                    // Efecto repetido al cabo de 2 segundos
+                    setTimeout(() => {
+                        fire(0.25, { spread: 60 });
+                        fire(0.2, { spread: 80, startVelocity: 40 });
+                    }, 2000);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        celebrationObserver.observe(celebrationSection);
+
+        /* --- Pétalos flotantes laterales --- */
+        const petalEmojis = ["🌸", "🌺", "🌷", "💮", "🌼"];
+        function createPetal(side) {
+            const petal = document.createElement("div");
+            petal.className = `petal from-${side}`;
+            petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            document.body.appendChild(petal);
+
+            setTimeout(() => petal.classList.add("visible"), 100);
+            setTimeout(() => {
+                petal.classList.remove("visible");
+                setTimeout(() => petal.remove(), 1000);
+            }, 7000);
+        }
+
+        setInterval(() => createPetal("left"), 6000);
+        setInterval(() => createPetal("right"), 6500);
+
+        /* --- Animación del botón de WhatsApp al hacer clic --- */
+        const whatsappBtn = document.getElementById("whatsapp-btn");
+        whatsappBtn.addEventListener("click", () => {
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#25D366', '#c6a3af', '#ffffff']
+            });
         });
 
-        // Observador de scroll para mostrar pétalos
-        const petalObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                const sectionIndex = Array.from(sections).indexOf(entry.target);
-                const petals = document.querySelectorAll('.petal');
-
-                petals.forEach(petal => {
-                    const petalTop = parseFloat(petal.style.top);
-                    const sectionTop = sectionIndex * 100;
-                    const sectionBottom = (sectionIndex + 1) * 100;
-
-                    if (petalTop >= sectionTop && petalTop <= sectionBottom) {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                petal.classList.add('visible');
-                            }, 200);
-                        } else {
-                            petal.classList.remove('visible');
-                        }
-                    }
+        /* --- Suavizado de scroll --- */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute("href")).scrollIntoView({
+                    behavior: "smooth"
                 });
             });
-        }, {
-            threshold: 0.2
         });
+    </script>
+</body>
 
-        sections.forEach(section => {
-            petalObserver.observe(section);
-        });
-
-        // Crear de
+</html>
